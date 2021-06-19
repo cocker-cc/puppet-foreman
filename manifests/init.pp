@@ -245,8 +245,8 @@ class foreman (
   Stdlib::Absolutepath $client_ssl_key = $foreman::params::client_ssl_key,
   Boolean $oauth_active = $foreman::params::oauth_active,
   Boolean $oauth_map_users = $foreman::params::oauth_map_users,
-  String $oauth_consumer_key = $foreman::params::oauth_consumer_key,
-  String $oauth_consumer_secret = $foreman::params::oauth_consumer_secret,
+  Variant[String, Sensitive[String]] $oauth_consumer_key = $foreman::params::oauth_consumer_key,
+  Variant[String, Sensitive[String]] $oauth_consumer_secret = $foreman::params::oauth_consumer_secret,
   String $initial_admin_username = $foreman::params::initial_admin_username,
   String $initial_admin_password = $foreman::params::initial_admin_password,
   Optional[String] $initial_admin_first_name = $foreman::params::initial_admin_first_name,
@@ -306,6 +306,16 @@ class foreman (
     $db_password.unwrap
   } else {
     $db_password
+  }
+  $oauth_consumer_key_unsensitive = if $oauth_consumer_key =~ Sensitive {
+    $oauth_consumer_key.unwrap
+  } else {
+    $oauth_consumer_key
+  }
+  $oauth_consumer_secret_unsensitive = if $oauth_consumer_secret =~ Sensitive {
+    $oauth_consumer_secret.unwrap
+  } else {
+    $oauth_consumer_secret
   }
 
   if $db_sslmode == 'UNSET' and $db_root_cert {

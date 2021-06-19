@@ -148,8 +148,8 @@ class foreman::params {
   # We need the REST API interface with OAuth for some REST Puppet providers
   $oauth_active = true
   $oauth_map_users = false
-  $oauth_consumer_key = extlib::cache_data('foreman_cache_data', 'oauth_consumer_key', extlib::random_password(32))
-  $oauth_consumer_secret = extlib::cache_data('foreman_cache_data', 'oauth_consumer_secret', extlib::random_password(32))
+  $oauth_consumer_key = Sensitive(extlib::cache_data('foreman_cache_data', 'oauth_consumer_key', extlib::random_password(32)))
+  $oauth_consumer_secret = Sensitive(extlib::cache_data('foreman_cache_data', 'oauth_consumer_secret', extlib::random_password(32)))
 
   # Initial admin account details
   $initial_admin_username = 'admin'

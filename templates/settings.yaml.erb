@@ -12,8 +12,8 @@
 # The following values are used for providing default settings during db migrate
 :oauth_active: <%= scope.lookupvar("foreman::oauth_active") %>
 :oauth_map_users: <%= scope.lookupvar("foreman::oauth_map_users") %>
-:oauth_consumer_key: <%= scope.lookupvar("foreman::oauth_consumer_key") %>
-:oauth_consumer_secret: <%= scope.lookupvar("foreman::oauth_consumer_secret") %>
+:oauth_consumer_key: <%= scope.lookupvar("foreman::oauth_consumer_key_unsensitive") %>
+:oauth_consumer_secret: <%= scope.lookupvar("foreman::oauth_consumer_secret_unsensitive") %>
 
 # Websockets
 :websockets_encrypt: <%= scope.lookupvar("foreman::websockets_encrypt") %>
