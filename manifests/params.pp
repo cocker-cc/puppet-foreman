@@ -37,7 +37,7 @@ class foreman::params {
   $db_username = 'foreman'
   # Generate and cache the password on the master once
   # In multi-puppetmaster setups, the user should specify their own
-  $db_password = extlib::cache_data('foreman_cache_data', 'db_password', extlib::random_password(32))
+  $db_password = Sensitive(extlib::cache_data('foreman_cache_data', 'db_password', extlib::random_password(32)))
   # Default database connection pool
   $db_pool = 5
   # if enabled, will run rake jobs, which depend on the database

@@ -256,6 +256,95 @@ describe 'foreman' do
         end
       end
 
+      describe 'with all parameters and Sensitive for Secrets' do
+        let :params do
+          {
+            foreman_url: 'http://localhost',
+            unattended: true,
+            plugin_prefix: 'ruby-foreman',
+            servername: 'localhost',
+            serveraliases: ['foreman'],
+            ssl: true,
+            version: '1.12',
+            plugin_version: 'installed',
+            db_manage: true,
+            db_host: 'UNSET',
+            db_port: 'UNSET',
+            db_database: 'UNSET',
+            db_username: 'foreman',
+            db_password: sensitive('secret'),
+            db_sslmode: 'UNSET',
+            db_pool: 5,
+            db_manage_rake: true,
+            app_root: '/usr/share/foreman',
+            manage_user: false,
+            user: 'foreman',
+            group: 'foreman',
+            user_groups: %w[adm wheel],
+            rails_env: 'production',
+            vhost_priority: '5',
+            server_port: 80,
+            server_ssl_port: 443,
+            server_ssl_ca: '/etc/ssl/certs/ca.pem',
+            server_ssl_chain: '/etc/ssl/certs/ca.pem',
+            server_ssl_cert: '/etc/ssl/certs/snakeoil.pem',
+            server_ssl_certs_dir: '/etc/ssl/certs/',
+            server_ssl_key: '/etc/ssl/private/snakeoil.pem',
+            server_ssl_crl: '/etc/ssl/certs/ca/crl.pem',
+            server_ssl_protocol: '-all +TLSv1.2',
+            client_ssl_ca: '/etc/ssl/certs/ca.pem',
+            client_ssl_cert: '/etc/ssl/certs/snakeoil.pem',
+            client_ssl_key: '/etc/ssl/private/key.pem',
+            oauth_active: true,
+            oauth_map_users: false,
+            oauth_consumer_key: 'random',
+            oauth_consumer_secret: 'random',
+            initial_admin_username: 'admin',
+            initial_admin_password: 'secret',
+            initial_admin_first_name: 'Alice',
+            initial_admin_last_name: 'Bob',
+            initial_admin_email: 'alice@bob.com',
+            initial_admin_locale: 'en_GB',
+            initial_admin_timezone: 'Hawaii',
+            initial_organization: 'acme',
+            initial_location: 'acme',
+            ipa_authentication: false,
+            http_keytab: '/etc/httpd/conf.keytab',
+            pam_service: 'foreman',
+            ipa_manage_sssd: true,
+            websockets_encrypt: true,
+            websockets_ssl_key: '/etc/ssl/private/snakeoil-ws.pem',
+            websockets_ssl_cert: '/etc/ssl/certs/snakeoil-ws.pem',
+            logging_level: 'info',
+            loggers: {},
+            email_delivery_method: 'sendmail',
+            email_smtp_address: 'smtp.example.com',
+            email_smtp_port: 25,
+            email_smtp_domain: 'example.com',
+            email_smtp_authentication: 'none',
+            email_smtp_user_name: 'root',
+            email_smtp_password: 'secret',
+            keycloak: true,
+            keycloak_app_name: 'cloak-app',
+            keycloak_realm: 'myrealm',
+          }
+        end
+
+        it { is_expected.to compile.with_all_deps }
+        it do
+          is_expected.to contain_class('foreman::config::apache')
+            .with_keycloak(true)
+            .with_keycloak_app_name('cloak-app')
+            .with_keycloak_realm('myrealm')
+        end
+
+        it 'should configure certificates in settings.yaml' do
+          is_expected.to contain_concat__fragment('foreman_settings+01-header.yaml')
+            .with_content(%r{^:websockets_ssl_key: /etc/ssl/private/snakeoil-ws\.pem$})
+            .with_content(%r{^:websockets_ssl_cert: /etc/ssl/certs/snakeoil-ws\.pem$})
+        end
+      end
+
       context 'with journald logging' do
         let(:params) { super().merge(logging_type: 'journald') }
         it { is_expected.to compile.with_all_deps }

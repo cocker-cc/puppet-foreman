@@ -7,7 +7,9 @@ class foreman::database::postgresql {
 
   $password = $foreman::db_password ? {
     'UNSET' => false,
-    default => postgresql::postgresql_password($foreman::db_username, $foreman::db_password),
+    # as soon, as the Function accepts Sensitive (Pull-Request pending), we can remove the Workaround
+    #default => postgresql::postgresql_password($foreman::db_username, $foreman::db_password),
+    default => postgresql::postgresql_password($foreman::db_username, $foreman::db_password_unsensitive),
   }
 
   # Prevents errors if run from /root etc.

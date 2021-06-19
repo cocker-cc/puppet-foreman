@@ -218,7 +218,7 @@ class foreman (
   Variant[Undef, Enum['UNSET'], Stdlib::Port] $db_port = 'UNSET',
   Optional[String] $db_database = 'UNSET',
   Optional[String] $db_username = $foreman::params::db_username,
-  Optional[String] $db_password = $foreman::params::db_password,
+  Optional[Variant[String, Sensitive[String]]] $db_password = $foreman::params::db_password,
   Optional[String] $db_sslmode = 'UNSET',
   Optional[String] $db_root_cert = undef,
   Integer[0] $db_pool = $foreman::params::db_pool,
@@ -298,6 +298,16 @@ class foreman (
   String[1] $keycloak_app_name = $foreman::params::keycloak_app_name,
   String[1] $keycloak_realm = $foreman::params::keycloak_realm,
 ) inherits foreman::params {
+
+  # this Workaround is necessary, because
+  # 1. the ERB-Template cannot handle Sensitive Data (whereas EPP would do so natively), and
+  # 2. the Function postgresql::postgresql_password is not ready for Sensitive yet (Pull-Request pending)
+  $db_password_unsensitive = if $db_password =~ Sensitive {
+    $db_password.unwrap
+  } else {
+    $db_password
+  }
+
   if $db_sslmode == 'UNSET' and $db_root_cert {
     $db_sslmode_real = 'verify-full'
   } else {
