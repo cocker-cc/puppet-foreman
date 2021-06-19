@@ -1,0 +1,25 @@
+<%- |
+  Stdlib::HTTPUrl                    $epp_server_url,
+  Variant[String, Sensitive[String]] $epp_secret_token,
+  Pattern[/^[a-zA-Z0-9 _-]+$/]       $epp_service_name,
+  Integer[0,5]                       $epp_log_level,
+  Integer[0]                         $epp_pool_size,
+  Integer[0]                         $epp_api_buffer_size,
+  String                             $epp_api_request_size,
+  String                             $epp_api_request_time,
+  Integer[0]                         $epp_transaction_max_spans,
+  Boolean                            $epp_http_compression,
+  String                             $epp_metrics_interval,
+| -%>
+:foreman_supervisory_authority:
+  server_url: <%= $epp_server_url %>
+  secret_token: '<%= $epp_secret_token %>'
+  service_name: '<%= $epp_service_name %>'
+  log_level: <%= $epp_log_level %>
+  pool_size: <%= $epp_pool_size %>
+  api_buffer_size: <%= $epp_api_buffer_size %>
+  api_request_size: '<%= $epp_api_request_size %>'
+  api_request_time: '<%= $epp_api_request_time %>'
+  transaction_max_spans: <%= $epp_transaction_max_spans %>
+  http_compression: <%= if $epp_http_compression { 'true' } else { 'false' } %>
+  metrics_interval: '<%= $epp_metrics_interval %>'
