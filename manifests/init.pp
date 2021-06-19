@@ -275,7 +275,7 @@ class foreman (
   Optional[Stdlib::Fqdn] $email_smtp_domain = $foreman::params::email_smtp_domain,
   Enum['none', 'plain', 'login', 'cram-md5'] $email_smtp_authentication = $foreman::params::email_smtp_authentication,
   Optional[String] $email_smtp_user_name = $foreman::params::email_smtp_user_name,
-  Optional[String] $email_smtp_password = $foreman::params::email_smtp_password,
+  Optional[Variant[String, Sensitive[String]]] $email_smtp_password = $foreman::params::email_smtp_password,
   String $telemetry_prefix = $foreman::params::telemetry_prefix,
   Boolean $telemetry_prometheus_enabled = $foreman::params::telemetry_prometheus_enabled,
   Boolean $telemetry_statsd_enabled = $foreman::params::telemetry_statsd_enabled,

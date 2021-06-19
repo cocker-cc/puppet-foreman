@@ -323,7 +323,7 @@ describe 'foreman' do
             email_smtp_domain: 'example.com',
             email_smtp_authentication: 'none',
             email_smtp_user_name: 'root',
-            email_smtp_password: 'secret',
+            email_smtp_password: sensitive('secret'),
             keycloak: true,
             keycloak_app_name: 'cloak-app',
             keycloak_realm: 'myrealm',
