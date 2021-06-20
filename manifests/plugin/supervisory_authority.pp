@@ -45,17 +45,17 @@ class foreman::plugin::supervisory_authority (
     config => epp(
       'foreman/foreman_supervisory_authority.yaml.epp',
       {
-        epp_server_url            => $server_url,
-        epp_secret_token          => $secret_token,
-        epp_service_name          => $service_name,
-        epp_log_level             => $log_level,
-        epp_pool_size             => $pool_size,
-        epp_api_buffer_size       => $api_buffer_size,
-        epp_api_request_size      => $api_request_size,
-        epp_api_request_time      => $api_request_time,
-        epp_transaction_max_spans => $transaction_max_spans,
-        epp_http_compression      => $http_compression,
-        epp_metrics_interval      => $metrics_interval,
+        server_url            => $server_url,
+        secret_token          => $secret_token,
+        service_name          => $service_name,
+        log_level             => $log_level,
+        pool_size             => $pool_size,
+        api_buffer_size       => $api_buffer_size,
+        api_request_size      => $api_request_size,
+        api_request_time      => $api_request_time,
+        transaction_max_spans => $transaction_max_spans,
+        http_compression      => $http_compression,
+        metrics_interval      => $metrics_interval,
       }
     ),
   }

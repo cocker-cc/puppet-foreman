@@ -80,7 +80,7 @@ describe 'foreman::cli' do
           <<-PUPPET
           class { 'foreman':
             initial_admin_username => 'jane',
-            initial_admin_password => 'supersecret',
+            initial_admin_password => Sensitive('supersecret'),
             foreman_url            => 'https://foreman.example.com',
             server_ssl_chain       => '/etc/puppetlabs/puppet/ssl/certs/ca.pub',
           }

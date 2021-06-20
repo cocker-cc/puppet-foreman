@@ -248,7 +248,7 @@ class foreman (
   Variant[String, Sensitive[String]] $oauth_consumer_key = $foreman::params::oauth_consumer_key,
   Variant[String, Sensitive[String]] $oauth_consumer_secret = $foreman::params::oauth_consumer_secret,
   String $initial_admin_username = $foreman::params::initial_admin_username,
-  String $initial_admin_password = $foreman::params::initial_admin_password,
+  Variant[String, Sensitive[String]] $initial_admin_password = $foreman::params::initial_admin_password,
   Optional[String] $initial_admin_first_name = $foreman::params::initial_admin_first_name,
   Optional[String] $initial_admin_last_name = $foreman::params::initial_admin_last_name,
   Optional[String] $initial_admin_email = $foreman::params::initial_admin_email,

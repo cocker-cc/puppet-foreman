@@ -153,7 +153,7 @@ class foreman::params {
 
   # Initial admin account details
   $initial_admin_username = 'admin'
-  $initial_admin_password = extlib::cache_data('foreman_cache_data', 'admin_password', extlib::random_password(16))
+  $initial_admin_password = Sensitive(extlib::cache_data('foreman_cache_data', 'admin_password', extlib::random_password(16)))
   $initial_admin_first_name = undef
   $initial_admin_last_name = undef
   $initial_admin_email = undef

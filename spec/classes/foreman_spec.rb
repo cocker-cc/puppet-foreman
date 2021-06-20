@@ -300,7 +300,7 @@ describe 'foreman' do
             oauth_consumer_key: sensitive('random'),
             oauth_consumer_secret: sensitive('random'),
             initial_admin_username: 'admin',
-            initial_admin_password: 'secret',
+            initial_admin_password: sensitive('secret'),
             initial_admin_first_name: 'Alice',
             initial_admin_last_name: 'Bob',
             initial_admin_email: 'alice@bob.com',
